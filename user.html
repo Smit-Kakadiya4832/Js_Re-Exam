@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee-Data</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: black;
+      background-size: cover;
+      background-position-y: -50%;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      color: white;
+      padding: 100px 50px;
+      border: 2px solid #fff;
+      border-radius: 12px;
+    }
+
+    th,
+    td {
+      padding: 10px;
+    }
+
+    input[type=button] {
+      padding: 8px 16px;
+      background: transparent;
+      color: white;
+      font-weight: 500;
+      border: 1px solid white;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 4px 8px;
+      color: rgb(0, 0, 0);
+      border: 1px solid white;
+      border-radius: 4px;
+    }
+
+    input[type=text] {
+      padding: 8px;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid white;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 35px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    .line {
+      margin: 10px 0 30px;
+    }
+
+    .text {
+      font-size: 18px;
+    }
+
+    .heading {
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="box">
+          <h1>Employee Data</h1>
+          <hr class="line">
+          <table>
+            <input type="hidden" id="editid" />
+            <tr>
+              <td class="text">Id</td>
+              <td><input type="text" id="empid" /></td>
+            </tr>
+            <tr>
+              <td class="text">Name</td>
+              <td><input type="text" id="name" /></td>
+            </tr>
+            <tr>
+              <td class="text">Email</td>
+              <td><input type="text" id="email" /></td>
+            </tr>
+            <tr>
+              <td class="text">Password</td>
+              <td><input type="text" id="password" /></td>
+            </tr>
+            <tr>
+              <td class="text">Phone</td>
+              <td><input type="text" id="phone" /></td>
+            </tr>
+            <tr>
+              <td class="text">Designation</td>
+              <td><input type="text" id="designation" /></td>
+            </tr>
+            <tr>
+              <td class="text">City</td>
+              <td><input type="text" id="city" /></td>
+            </tr>
+            <tr>
+              <td class="text">Salary</td>
+              <td><input type="text" id="salary" /></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <input type="button" onclick="save()" id="addbtn" value="Assign" />
+              </td>
+            </tr>
+          </table><br /><br />
+
+          <table border="1">
+            <thead>
+              <tr>
+                <th class="heading">Empid</th>
+                <th class="heading">Name</th>
+                <th class="heading">Email</th>
+                <th class="heading">Password</th>
+                <th class="heading">Phone</th>
+                <th class="heading">Designation</th>
+                <th class="heading">City</th>
+                <th class="heading">Salary</th>
+              </tr>
+            </thead>
+            <tbody id="record"></tbody>
+          </table>
+          <br>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="text/javascript">
+    let data = [];
+
+    const viewdata = () => {
+      document.getElementById('addbtn').style.display = "block";
+
+      let val = JSON.parse(localStorage.getItem('user'));
+      let record = (val == null) ? [] : val;
+      let tbl = "";
+      record.map((v) => {
+        const { userid, empid, name, email, password, phone, Designation, city, salary } = v;
+        tbl += `
+                    <tr>        
+                        <td>${empid}</td>        
+                        <td>${name}</td>        
+                        <td>${email}</td>        
+                        <td>${password}</td> 
+                        <td>${phone}</td>        
+                        <td>${Designation}</td>
+                        <td>${city}</td>      
+                        <td>${salary}</td>  
+                      
+                    </tr>
+                `
+      });
+      document.getElementById('record').innerHTML = tbl;
+    }
+    viewdata();
+
+    const save = () => {
+      let userid = document.getElementById('editid').value;
+      let empid = document.getElementById('empid').value;
+      let name = document.getElementById('name').value;
+      let email = document.getElementById('email').value;
+      let password = document.getElementById('password').value;
+      let phone = document.getElementById('phone').value;
+      let designation = document.getElementById('designation').value;
+      let city = document.getElementById('city').value;
+      let salary = document.getElementById('salary').value;
+
+      let obj = {
+        userid: Math.floor(Math.random() * 10000),
+        empid :empid,
+        name :name,
+        email :email,
+        password :password,
+        phone :phone,
+        designation :designation,
+        city :city,
+        salary :salary
+      }
+
+      if (userid) {
+        let val = JSON.parse(localStorage.getItem('user'));
+        for (let i in val) {
+          if (val[i].userid == userid) {
+            val[i].empid = empid;
+            val[i].name = name;
+            val[i].email = email;
+            val[i].password = password;
+            val[i].phone = phone;
+            val[i].designation = designation;
+            val[i].city = city;
+            val[i].salary = salary;
+          }
+        }
+
+        localStorage.setItem('user', JSON.stringify(val));
+        // document.getElementById('editid').value = "";
+        viewdata();
+      } else {
+
+        if (localStorage.getItem('user') === null || localStorage.getItem('user') === undefined) {
+          data.push(obj);
+          localStorage.setItem('user', JSON.stringify(data));
+        } else {
+          let val = JSON.parse(localStorage.getItem('user'));
+          val.push(obj);
+          localStorage.setItem('user', JSON.stringify(val));
+        }
+        viewdata();
+      }
+
+      document.getElementById('empid').value = "";
+      document.getElementById('name').value = "";
+      document.getElementById('email').value = "";
+      document.getElementById('password').value = "";
+      document.getElementById('phone').value = "";
+      document.getElementById('designation').value = "";
+      document.getElementById('city').value = "";
+      document.getElementById('salary').value = "";
+    }
+
+    const del = (id) => {
+      let alldata = JSON.parse(localStorage.getItem('user'));
+      let ans = alldata.filter((val) => {
+        return val.userid != id;
+      })
+      localStorage.setItem('user', JSON.stringify(ans));
+      viewdata();
+    }
+
+    const edit = (id) => {
+      document.getElementById('editbtn').style.display = "block";
+      document.getElementById('addbtn').style.display = "none";
+      let alldata = JSON.parse(localStorage.getItem('user'));
+
+      let ans = alldata.filter((val) => {
+        return val.userid == id;
+      })
+
+      document.getElementById('empid').value = ans[0].id;
+      document.getElementById('name').value = ans[0].name;
+      document.getElementById('email').value = ans[0].email;
+      document.getElementById('password').value = ans[0].password;
+      document.getElementById('phone').value = ans[0].phone;
+      document.getElementById('designation').value = ans[0].designation;
+      document.getElementById('city').value = ans[0].city;
+      document.getElementById('salary').value = ans[0].salary;
+      // document.getElementById('editid').value = ans[0].userid;
+    }
+
+  </script>
+</body>
+
+</html>
