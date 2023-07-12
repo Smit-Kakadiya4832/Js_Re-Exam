@@ -24,7 +24,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 200vh;
     }
 
     .box {
@@ -162,7 +162,7 @@
       let record = (val == null) ? [] : val;
       let tbl = "";
       record.map((v) => {
-        const { userid, empid, name, email, password, phone, Designation, city, salary } = v;
+        const { userid, empid, name, email, password, phone, designation, city, salary } = v;
         tbl += `
                     <tr>        
                         <td>${empid}</td>        
@@ -170,7 +170,7 @@
                         <td>${email}</td>        
                         <td>${password}</td> 
                         <td>${phone}</td>        
-                        <td>${Designation}</td>
+                        <td>${designation}</td>
                         <td>${city}</td>      
                         <td>${salary}</td>  
                       
